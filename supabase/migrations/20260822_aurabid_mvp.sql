@@ -147,7 +147,7 @@ begin
 end;
 $$;
 
-grant execute on function public.register_aura_presence(uuid, uuid, boolean) to anon, authenticated;
+grant execute on function public.register_aura_presence(uuid, uuid, boolean) to anon;
 
 do $$
 begin
@@ -223,6 +223,14 @@ alter table public.aura_wallets enable row level security;
 revoke all on public.aura_billing_events from public, anon, authenticated;
 revoke all on public.aura_wallets from public, anon, authenticated;
 
+drop policy if exists "Billing events are private" on public.aura_billing_events;
+create policy "Billing events are private" on public.aura_billing_events for select
+to anon, authenticated using (false);
+
+drop policy if exists "Wallets are private" on public.aura_wallets;
+create policy "Wallets are private" on public.aura_wallets for select
+to anon, authenticated using (false);
+
 create or replace function public.place_aura_bid(
   p_season_id uuid,
   p_handle text,
@@ -282,7 +290,7 @@ begin
 end;
 $$;
 
-grant execute on function public.place_aura_bid(uuid, text, text, text, text, integer, text, text, integer, text) to anon, authenticated;
+grant execute on function public.place_aura_bid(uuid, text, text, text, text, integer, text, text, integer, text) to anon;
 
 create or replace function public.credit_paypal_capture(
   p_paypal_order_id text,
