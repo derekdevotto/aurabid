@@ -3,7 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import PayPalContext from "@/components/paypal-provider";
 import "./globals.css";
 
-const siteUrl = "https://aurabid.lol";
+const siteUrl = "https://www.aurabid.lol";
 const siteTitle = "AuraBid — leaderboard de aura en vivo";
 const siteDescription = "Reclamá tu lugar en el leaderboard de aura. Hacé una oferta, superá a la competencia y convertite en el #1.";
 

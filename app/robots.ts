@@ -7,7 +7,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/"],
     },
-    sitemap: "https://aurabid.lol/sitemap.xml",
-    host: "https://aurabid.lol",
+    sitemap: "https://www.aurabid.lol/sitemap.xml",
+    host: "https://www.aurabid.lol",
   };
 }
