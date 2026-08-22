@@ -3,4 +3,3 @@ Allow: /
 Disallow: /api/
 
 Sitemap: https://www.aurabid.lol/sitemap.xml
-Sitemap: https://www.aurabid.lol/sitemap.txt
