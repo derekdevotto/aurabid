@@ -225,6 +225,7 @@ export default function Home() {
   const [showRules, setShowRules] = useState(false);
   const [showWallet, setShowWallet] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showMobileNav, setShowMobileNav] = useState(false);
   const [simulatingPack, setSimulatingPack] = useState<number | null>(null);
   const [darkMode, setDarkMode] = useState(false);
   const [locale, setLocale] = useState<Locale>("es");
@@ -510,7 +511,9 @@ export default function Home() {
       <header className="site-header">
         <div className="brand-lockup"><span className="brand-icon"><Image src="/aura-mark-navbar.png" alt="" width={30} height={30} priority /></span><span className="brand-name">aurabid<span>.lol</span></span></div>
         <nav className="main-nav" aria-label="Navegación principal"><a href="#leaderboard">{copy.leaderboard}</a><a href="#categories">{copy.categories}</a><a href="#about">{copy.about}</a><button onClick={() => setShowRules(true)}>{copy.rules}</button></nav>
+        <button className="main-mobile-toggle" type="button" aria-label={showMobileNav ? "Cerrar menú" : "Abrir menú"} aria-expanded={showMobileNav} onClick={() => setShowMobileNav((value) => !value)}><Icon name="menu" size={19} /></button>
         <div className="header-tools"><button className="wallet-button" onClick={() => setShowWallet(true)}><Icon name="wallet" size={15} /><span>{copy.balance}</span><strong>+{formatPoints(wallet)}</strong></button><button className="locale-button" aria-label="Cambiar idioma" onClick={() => setLocale((value) => value === "es" ? "en" : "es")}>{locale.toUpperCase()}</button><button className="theme-button" aria-label="Cambiar tema" onClick={() => setDarkMode((value) => !value)}><Icon name="moon" size={16} /></button></div>
+        {showMobileNav ? <nav className="main-mobile-nav" aria-label="Menú móvil"><a href="#leaderboard" onClick={() => setShowMobileNav(false)}>{copy.leaderboard}<span>→</span></a><a href="#categories" onClick={() => setShowMobileNav(false)}>{copy.categories}<span>→</span></a><a href="#about" onClick={() => setShowMobileNav(false)}>{copy.about}<span>→</span></a><button onClick={() => { setShowRules(true); setShowMobileNav(false); }}>{copy.rules}<span>→</span></button></nav> : null}
       </header>
 
       <section className="hero-block">
