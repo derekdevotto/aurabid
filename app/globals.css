@@ -22,7 +22,7 @@ button { cursor: pointer; }
 a { color: inherit; text-decoration: none; }
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid rgba(101, 87, 245, .28); outline-offset: 3px; }
 .site-shell { width: min(100%, 1260px); margin: 0 auto; padding: 0 24px; }
-.site-header { height: 72px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; margin: 0 -24px; padding: 0 24px; border-bottom: 1px solid rgba(222, 220, 240, .72); background: rgba(240, 239, 255, .78); backdrop-filter: blur(18px); }
+.site-header { width: 100vw; height: 72px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: 0 max(24px, calc((100vw - 1260px) / 2 + 24px)); border-bottom: 1px solid rgba(222, 220, 240, .72); background: rgba(240, 239, 255, .78); backdrop-filter: blur(18px); }
 .brand-lockup { display: flex; align-items: center; gap: 8px; }
 .brand-icon { width: 34px; height: 34px; display: grid; place-items: center; color: var(--text); }
 .brand-mark { display: block; }
@@ -208,7 +208,7 @@ html[data-theme="dark"] .outbid-button { color: #141720; }
 }
 @media (max-width: 560px) {
   .site-shell { padding: 0 15px; }
-  .site-header { margin: 0 -15px; padding: 0 15px; }
+  .site-header { margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); padding: 0 15px; }
   .site-header { height: 65px; }
   .brand-icon, .brand-icon img { width: 30px; height: 30px; }
   .brand-name { font-size: 18px; }
