@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import PayPalContext from "@/components/paypal-provider";
 import "./globals.css";
 
@@ -17,7 +18,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es">
-      <body><PayPalContext>{children}</PayPalContext></body>
+      <body>
+        <PayPalContext>{children}</PayPalContext>
+        <Analytics />
+      </body>
     </html>
   );
 }
