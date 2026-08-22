@@ -233,6 +233,11 @@ export default function Home() {
 
   const leader = entries[0];
   const copy = messages[locale];
+  const visitorLabel = locale === "es" ? "visitantes únicos desde el lanzamiento" : "unique visitors since launch";
+  const entryClickLabel = locale === "es" ? "clics" : "clicks";
+  const statsNote = cloudStatus === "connected"
+    ? (locale === "es" ? "Visitantes únicos de AuraBid, registrados por sesión en Supabase. Los clics de cada oferta son una métrica separada; Vercel Analytics usa su propio contador." : "AuraBid unique visitors, registered per session in Supabase. Clicks on each offer are a separate metric; Vercel Analytics uses its own counter.")
+    : copy.statsNote;
   const categoryLabel = (category: string) => categoryLabels[locale][category] || category;
   const targetPreview = useMemo(() => normalizeTarget(handle), [handle]);
   const prospectiveRank = useMemo(() => entries.filter((entry) => entry.bid > bid).length + 1, [bid, entries]);
@@ -508,7 +513,7 @@ export default function Home() {
       </header>
 
       <section className="hero-block">
-        <div className="online-pill"><span className="online-dot" /> <strong>{formatPoints(liveOnline)} {copy.online}</strong><span>· {formatPoints(liveVisitors)} {copy.visitors} ·</span><button onClick={() => setShowStats(true)}>{copy.stats} <Icon name="arrow" size={13} /></button></div>
+        <div className="online-pill"><span className="online-dot" /> <strong>{formatPoints(liveOnline)} {copy.online}</strong><span>· {formatPoints(liveVisitors)} {visitorLabel} ·</span><button onClick={() => setShowStats(true)}>{copy.stats} <Icon name="arrow" size={13} /></button></div>
         <h1><span className="claim-copy">{locale === "es" ? "Reclamá" : "Claim"} <b>#{prospectiveRank}</b> {locale === "es" ? "por" : "for"}</span> <span className="price-control"><button aria-label="-50 aura" onClick={() => changeBid(-50)}>−</button><label className="price-edit"><span>+</span><input aria-label="Cantidad de aura" type="number" min="0" step="50" inputMode="numeric" value={bid} onChange={(event) => setBid(Math.max(0, Number(event.target.value) || 0))} /></label><small>aura</small><button aria-label="+50 aura" onClick={() => changeBid(50)}>+</button></span></h1>
         <p className="hero-subtitle"><span>{copy.heroLead}</span> {copy.heroBody}</p>
         <form className="claim-form" onSubmit={submitBid}>
@@ -529,9 +534,22 @@ export default function Home() {
       <section className="board-section" id="leaderboard">
         <div className="board-heading"><div><p className="eyebrow">{copy.season}</p><h2>{copy.board}</h2></div><p className="reset-info"><Icon name="clock" size={14} /> {copy.resets} <strong>{formatTime(secondsLeft)}</strong></p></div>
         <div className="board-list">
-          {visibleEntries.map((entry, index) => <article className={`entry-card aura-rank-${Math.min(index + 1, 5)} ${index === 0 && selectedCategory === "Todo" ? "entry-leader" : ""}`} key={entry.handle}>
-            <div className="entry-rank">#{String(index + 1).padStart(2, "0")}</div><Avatar entry={entry} /><div className="entry-main"><div className="entry-title-row"><a className="entry-target" href={entry.url || `https://x.com/${entry.handle}`} target="_blank" rel="noreferrer" title={`${copy.openLink}: @${entry.handle}`}><h3>{entry.handle}</h3><Icon name="external" size={12} /></a>{index === 0 && selectedCategory === "Todo" ? <span className="live-tag">{copy.now}</span> : null}</div><p>{entry.title}</p><small>{entry.age} · {categoryLabel(entry.category)} · <span className="click-dot" /> {entry.clicks.toLocaleString("en-US")} visitas</small></div><div className="entry-bid"><span>+</span>{formatPoints(entry.bid)}<small>aura</small></div><a className="entry-arrow" href={entry.url || `https://x.com/${entry.handle}`} target="_blank" rel="noreferrer" aria-label={`${copy.openLink}: @${entry.handle}`}><Icon name="external" size={17} /></a>
-          </article>)}
+          {visibleEntries.map((entry, index) => (
+            <article className={`entry-card aura-rank-${Math.min(index + 1, 5)} ${index === 0 && selectedCategory === "Todo" ? "entry-leader" : ""}`} key={entry.handle}>
+              <div className="entry-rank">#{String(index + 1).padStart(2, "0")}</div>
+              <Avatar entry={entry} />
+              <div className="entry-main">
+                <div className="entry-title-row">
+                  <a className="entry-target" href={entry.url || `https://x.com/${entry.handle}`} target="_blank" rel="noreferrer" title={`${copy.openLink}: @${entry.handle}`}><h3>{entry.handle}</h3><Icon name="external" size={12} /></a>
+                  {index === 0 && selectedCategory === "Todo" ? <span className="live-tag">{copy.now}</span> : null}
+                </div>
+                <p>{entry.title}</p>
+                <small>{entry.age} · {categoryLabel(entry.category)} · <span className="click-dot" /> {entry.clicks.toLocaleString("en-US")} {entryClickLabel}</small>
+              </div>
+              <div className="entry-bid"><span>+</span>{formatPoints(entry.bid)}<small>aura</small></div>
+              <a className="entry-arrow" href={entry.url || `https://x.com/${entry.handle}`} target="_blank" rel="noreferrer" aria-label={`${copy.openLink}: @${entry.handle}`}><Icon name="external" size={17} /></a>
+            </article>
+          ))}
           {visibleEntries.length === 0 ? <div className="empty-state">Todavía no hay aura en esta categoría.</div> : null}
         </div>
         <div className="board-footer"><span><strong>{entries.length}</strong> {copy.active}</span><span><strong>+{formatPoints(totalAura)} aura</strong> {copy.verified}</span><span>{copy.noAlgorithm}</span><span className="cloud-status">{cloudStatus === "connected" ? "Supabase en vivo" : "Modo local"}</span></div>
@@ -550,7 +568,7 @@ export default function Home() {
 
       {showWallet ? <div className="modal-backdrop" onClick={() => setShowWallet(false)}><div className="wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Cerrar saldo" onClick={() => setShowWallet(false)}><Icon name="x" size={18} /></button><p className="eyebrow">{copy.vaultKicker}</p><h2 id="wallet-title">{copy.walletTitle}</h2><div className="payment-mode"><span className={paypalConfigured ? "mode-dot mode-dot-paypal" : "mode-dot"} />{paypalConfigured ? (paypalProduction ? copy.paypalLive : copy.paypalMode) : copy.paymentSimulation}</div><div className="wallet-balance"><span>{copy.availableBalance}</span><strong>+{formatPoints(wallet)} <small>aura</small></strong></div><div className="pack-grid">{auraPacks.map((points) => <div className="pack-card" key={points}><span>{copy.add}</span><strong>+{formatPoints(points)}</strong><small>{copy.auraPoints} · US${(points / 100).toFixed(2)}</small>{paypalConfigured ? <PayPalCheckout points={points} onSuccess={purchasePoints} onError={handlePayPalError} /> : <button className="demo-pack-button" disabled={simulatingPack !== null} onClick={() => simulatePurchase(points)}>{simulatingPack === points ? copy.processing : copy.simulatePay}</button>}</div>)}</div><p className="rules-note">{paypalConfigured ? (paypalProduction ? "PayPal Live activo. Los pagos son reales." : copy.sandbox) : copy.demo}</p><button className="reset-button" onClick={resetDemo}><Icon name="refresh" size={14} /> {copy.resetDemo}</button></div></div> : null}
 
-      {showStats ? <div className="modal-backdrop" onClick={() => setShowStats(false)}><div className="stats-modal" role="dialog" aria-modal="true" aria-labelledby="stats-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Cerrar estadísticas" onClick={() => setShowStats(false)}><Icon name="x" size={18} /></button><p className="eyebrow">{copy.statsKicker}</p><h2 id="stats-title">{copy.statsTitle}</h2><div className="stats-grid"><div><Icon name="chart" size={18} /><strong>{entries.length}</strong><span>{copy.activeEgos}</span></div><div><Icon name="spark" size={18} /><strong>+{formatPoints(totalAura)}</strong><span>{copy.auraGame}</span></div><div><Icon name="search" size={18} /><strong>{formatPoints(liveVisitors)}</strong><span>{copy.visits}</span></div><div><Icon name="clock" size={18} /><strong>{formatTime(secondsLeft)}</strong><span>{copy.remaining}</span></div></div><p className="rules-note">{cloudStatus === "connected" ? (locale === "es" ? "Datos compartidos en Supabase Realtime; el contador online se actualiza cada 15 segundos." : "Shared through Supabase Realtime; the online counter updates every 15 seconds.") : copy.statsNote}</p></div></div> : null}
+      {showStats ? <div className="modal-backdrop" onClick={() => setShowStats(false)}><div className="stats-modal" role="dialog" aria-modal="true" aria-labelledby="stats-title" onClick={(event) => event.stopPropagation()}><button className="modal-close" aria-label="Cerrar estadísticas" onClick={() => setShowStats(false)}><Icon name="x" size={18} /></button><p className="eyebrow">{copy.statsKicker}</p><h2 id="stats-title">{copy.statsTitle}</h2><div className="stats-grid"><div><Icon name="chart" size={18} /><strong>{entries.length}</strong><span>{copy.activeEgos}</span></div><div><Icon name="spark" size={18} /><strong>+{formatPoints(totalAura)}</strong><span>{copy.auraGame}</span></div><div><Icon name="search" size={18} /><strong>{formatPoints(liveVisitors)}</strong><span>{visitorLabel}</span></div><div><Icon name="clock" size={18} /><strong>{formatTime(secondsLeft)}</strong><span>{copy.remaining}</span></div></div><p className="rules-note">{statsNote}</p></div></div> : null}
     </main>
   );
 }
