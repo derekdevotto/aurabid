@@ -233,6 +233,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .public-rank-2 { color: #cf71c4; text-shadow: 0 0 10px rgba(207, 113, 196, .56); }
 .public-rank-3 { color: #3fa7d5; text-shadow: 0 0 8px rgba(63, 167, 213, .42); }
 .public-avatar { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; color: var(--text); background: var(--surface-soft); font-size: 11px; font-weight: 800; }
+.public-avatar img { width: 32px; height: 32px; display: block; object-fit: contain; border-radius: 9px; }
 .public-ranking-copy { min-width: 0; }
 .public-ranking-copy h3 { margin: 0; font-size: 15px; }
 .public-ranking-copy h3:hover { color: var(--coral); }
@@ -283,6 +284,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .back-link:hover { color: var(--coral); }
 .aura-profile-card { padding: 45px; border: 1px solid var(--line); border-radius: 24px; background: var(--surface); box-shadow: var(--shadow); text-align: center; }
 .aura-profile-avatar { width: 76px; height: 76px; margin: 0 auto 20px; border-radius: 25px; display: grid; place-items: center; color: var(--text); background: var(--surface-soft); font-size: 20px; font-weight: 800; }
+.aura-profile-avatar img { width: 54px; height: 54px; display: block; object-fit: contain; border-radius: 15px; }
 .aura-profile-card h1 { margin: 0; font-size: clamp(38px, 8vw, 70px); letter-spacing: -.08em; }
 .aura-profile-title { margin: 10px 0 0; color: var(--muted); font-size: 18px; }
 .aura-profile-score { display: flex; align-items: baseline; justify-content: center; gap: 7px; margin-top: 25px; color: var(--coral); }

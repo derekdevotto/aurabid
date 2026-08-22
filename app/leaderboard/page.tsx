@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PublicSiteHeader from "@/components/public-site-header";
 import ShareActions from "@/components/share-actions";
+import SiteFavicon from "@/components/site-favicon";
 import { getPublicEntries, getCategorySlug } from "@/lib/aura-data";
 
 const siteUrl = "https://www.aurabid.lol";
@@ -52,7 +53,7 @@ export default async function LeaderboardPage() {
           {entries.map((entry, index) => (
             <article className="public-ranking-card" key={entry.handle}>
               <strong className={`public-rank public-rank-${Math.min(index + 1, 5)}`}>#{String(index + 1).padStart(2, "0")}</strong>
-              <div className={`public-avatar avatar-${entry.tone}`}>{entry.initials}</div>
+              <SiteFavicon className="public-avatar" tone={entry.tone} url={entry.url} initials={entry.initials} />
               <div className="public-ranking-copy">
                 <Link href={`/aura/${encodeURIComponent(entry.handle)}`}><h3>@{entry.handle}</h3></Link>
                 <p>{entry.title}</p>

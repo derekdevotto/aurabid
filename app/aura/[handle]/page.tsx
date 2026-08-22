@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicSiteHeader from "@/components/public-site-header";
 import ShareActions from "@/components/share-actions";
+import SiteFavicon from "@/components/site-favicon";
 import { demoEntries, getCategorySlug, getPublicEntry } from "@/lib/aura-data";
 
 type Props = { params: Promise<{ handle: string }> };
@@ -51,7 +52,7 @@ export default async function AuraProfilePage({ params }: Props) {
       <article className="aura-profile-page">
         <Link className="back-link" href="/leaderboard">← Volver al leaderboard</Link>
         <div className="aura-profile-card">
-          <div className={`aura-profile-avatar avatar-${entry.tone}`}>{entry.initials}</div>
+          <SiteFavicon className="aura-profile-avatar" tone={entry.tone} url={entry.url} initials={entry.initials} />
           <p className="public-kicker">PUESTO #{rank} / TEMPORADA 01</p>
           <h1>@{entry.handle}</h1>
           <p className="aura-profile-title">{entry.title}</p>

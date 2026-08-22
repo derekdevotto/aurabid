@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import PublicSiteHeader from "@/components/public-site-header";
 import ShareActions from "@/components/share-actions";
+import SiteFavicon from "@/components/site-favicon";
 import { getCategoryBySlug, getPublicEntries, publicCategories } from "@/lib/aura-data";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -51,7 +52,7 @@ export default async function CategoryPage({ params }: Props) {
           {entries.length ? entries.map((entry, index) => (
             <article className="public-ranking-card" key={entry.handle}>
               <strong className={`public-rank public-rank-${Math.min(index + 1, 5)}`}>#{String(index + 1).padStart(2, "0")}</strong>
-              <div className={`public-avatar avatar-${entry.tone}`}>{entry.initials}</div>
+              <SiteFavicon className="public-avatar" tone={entry.tone} url={entry.url} initials={entry.initials} />
               <div className="public-ranking-copy"><Link href={`/aura/${encodeURIComponent(entry.handle)}`}><h3>@{entry.handle}</h3></Link><p>{entry.title}</p><small>{entry.clicks.toLocaleString("en-US")} visitas al perfil</small></div>
               <strong className="public-bid">+{entry.bid.toLocaleString("en-US")} <small>aura</small></strong>
               <Link className="public-view-link" href={`/aura/${encodeURIComponent(entry.handle)}`}>Ver aura</Link>

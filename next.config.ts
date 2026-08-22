@@ -4,7 +4,10 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   agentRules: false,
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "www.google.com", pathname: "/s2/favicons/**" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "www.google.com", pathname: "/s2/favicons/**" },
+      { protocol: "https", hostname: "icons.duckduckgo.com", pathname: "/ip3/**" },
+    ],
   },
 };
 
