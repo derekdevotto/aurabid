@@ -35,7 +35,7 @@ export async function POST(request: Request) {
       return attachAnonymousSession(NextResponse.json({ error: "Datos de oferta no válidos." }, { status: 400 }), session.id);
     }
 
-    const supabase = getSupabaseServerClient();
+    const supabase = getSupabaseServerClient({ requireServiceRole: true });
     if (!supabase) return attachAnonymousSession(NextResponse.json({ error: "Supabase no está configurado en el servidor." }, { status: 503 }), session.id);
 
     const { data: leader } = await supabase
@@ -47,6 +47,7 @@ export async function POST(request: Request) {
       .maybeSingle();
 
     const { data: entryData, error: entryError } = await supabase.rpc("place_aura_bid", {
+      p_session_id: session.id,
       p_season_id: body.seasonId,
       p_handle: handle,
       p_target_url: targetUrl,
@@ -59,7 +60,11 @@ export async function POST(request: Request) {
       p_age_label: "ahora",
     });
     if (entryError || !entryData) {
-      const message = entryError?.message?.includes("OUTBID_REQUIRED") ? "La oferta actual subió; actualizá el tablero e intentá de nuevo." : "No se pudo guardar la oferta.";
+      const message = entryError?.message?.includes("OUTBID_REQUIRED")
+        ? "La oferta actual subió; actualizá el tablero e intentá de nuevo."
+        : entryError?.message?.includes("INSUFFICIENT_AURA")
+          ? "No tenés suficiente aura disponible para esa oferta."
+          : "No se pudo guardar la oferta.";
       return attachAnonymousSession(NextResponse.json({ error: message }, { status: 409 }), session.id);
     }
 
@@ -73,7 +78,8 @@ export async function POST(request: Request) {
       age_label: "ahora",
     }).select("*").single();
 
-    return attachAnonymousSession(NextResponse.json({ entry, activity: activityData }), session.id);
+    const { data: wallet } = await supabase.from("aura_wallets").select("balance_points").eq("session_id", session.id).maybeSingle();
+    return attachAnonymousSession(NextResponse.json({ entry, activity: activityData, balance_points: wallet?.balance_points ?? 0 }), session.id);
   } catch {
     return attachAnonymousSession(NextResponse.json({ error: "No se pudo procesar la oferta." }, { status: 500 }), session.id);
   }

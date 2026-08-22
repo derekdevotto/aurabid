@@ -34,7 +34,6 @@ type Activity = {
 type SavedState = {
   entries: Entry[];
   activities: Activity[];
-  wallet: number;
   darkMode: boolean;
   locale: Locale;
 };
@@ -49,10 +48,10 @@ type Target = {
 
 const messages = {
   es: {
-    leaderboard: "Leaderboard", categories: "Categorías", about: "About", rules: "Reglas", balance: "Saldo", online: "online", visitors: "visitantes desde el lanzamiento", stats: "ver estadísticas", claim: "Reclamá el #1 por", heroLead: "+100 aura por oferta.", heroBody: "Tus puntos deciden tu puesto; la oferta más alta se queda con el #1.", urlPlaceholder: "Tu URL de producto o @handle", existing: "¿Ya estás en la lista? Ingresá el mismo @handle y pagá solo la diferencia.", available: "Disponible", spent: "cada punto gastado queda registrado en la temporada", season: "TEMPORADA 01 / HOY", board: "El tablero de aura", resets: "se reinicia en", now: "#1 AHORA", active: "egos activos", verified: "aura en ofertas verificadas", noAlgorithm: "sin algoritmo · sin favoritos · solo ofertas", ruleKicker: "LA ÚNICA REGLA", manifesto: "Más arriba no significa mejor.", manifestoEm: "Solo significa que pagaste más.", manifestoBody: "Un leaderboard público para sitios, perfiles y proyectos con demasiado ego. El puesto #1 siempre está a una oferta de distancia.", activity: "ÚLTIMOS MOVIMIENTOS", live: "EN VIVO", rulesKicker: "REGLAS DEL TRONO", rulesTitle: "Así funciona el aura.", rule1: "Cargás puntos en tu saldo demo.", rule2: "Tu oferta total define tu lugar en el tablero.", rule3: "Para ser #1 tenés que superar la oferta actual por +100.", rule4: "Si repetís tu @handle, solo pagás la diferencia.", rule5: "La temporada se reinicia; el historial queda.", ruleNote: "El saldo y las ofertas se guardan en este navegador. No se procesa dinero real.", vaultKicker: "TU BÓVEDA", walletTitle: "Comprá aura.", availableBalance: "saldo disponible", add: "sumar", auraPoints: "aura points", addDemo: "Agregar en demo", resetDemo: "Reiniciar demo", simulatePay: "Simular pago", processing: "Procesando...", paymentSimulation: "SIMULACIÓN", paypalMode: "PAYPAL SANDBOX", paypalLive: "PAYPAL LIVE · PAGOS REALES", sandbox: "Sandbox de PayPal activo. Los puntos se acreditan después de la captura.", demo: "Simulación local activa: no se cobra dinero real.", statsKicker: "DATOS DE TEMPORADA", statsTitle: "El caos, medido.", activeEgos: "egos activos", auraGame: "aura en juego", visits: "visitas registradas", remaining: "restantes", statsNote: "Las estadísticas del MVP viven en tu navegador y se reinician si borrás la demo.", xDetected: "Perfil de X detectado", urlDetected: "Enlace detectado", invalidTarget: "Pegá @usuario, un perfil de X o una URL válida.", openLink: "Abrir enlace", outbid: "Outbid", seoKicker: "EXPLORÁ AURABID", seoTitle: "El ranking público de aura.", seoBody: "Descubrí perfiles, proyectos y egos que compiten por el puesto #1. Cada aura tiene una página pública para compartir.", seoLeaderboard: "Ver leaderboard completo", seoCategories: "Explorar categorías"
+    leaderboard: "Leaderboard", categories: "Categorías", about: "About", rules: "Reglas", balance: "Saldo", online: "online", visitors: "visitantes desde el lanzamiento", stats: "ver estadísticas", claim: "Reclamá el #1 por", heroLead: "+100 aura por oferta.", heroBody: "Tus puntos deciden tu puesto; la oferta más alta se queda con el #1.", urlPlaceholder: "Tu URL de producto o @handle", existing: "¿Ya estás en la lista? Ingresá el mismo @handle y pagá solo la diferencia.", available: "Disponible", spent: "cada punto gastado queda registrado en la temporada", season: "TEMPORADA 01 / HOY", board: "El tablero de aura", resets: "se reinicia en", now: "#1 AHORA", active: "egos activos", verified: "aura en ofertas verificadas", noAlgorithm: "sin algoritmo · sin favoritos · solo ofertas", ruleKicker: "LA ÚNICA REGLA", manifesto: "Más arriba no significa mejor.", manifestoEm: "Solo significa que pagaste más.", manifestoBody: "Un leaderboard público para sitios, perfiles y proyectos con demasiado ego. El puesto #1 siempre está a una oferta de distancia.", activity: "ÚLTIMOS MOVIMIENTOS", live: "EN VIVO", rulesKicker: "REGLAS DEL TRONO", rulesTitle: "Así funciona el aura.", rule1: "Cargás puntos en tu saldo.", rule2: "Tu oferta total define tu lugar en el tablero.", rule3: "Para ser #1 tenés que superar la oferta actual por +100.", rule4: "Si repetís tu @handle, solo pagás la diferencia.", rule5: "La temporada se reinicia; el historial queda.", ruleNote: "El saldo se valida en el servidor cuando Supabase está conectado. En modo local, es solo una demo.", vaultKicker: "TU BÓVEDA", walletTitle: "Comprá aura.", availableBalance: "saldo disponible", add: "sumar", auraPoints: "aura points", addDemo: "Agregar en demo", resetDemo: "Reiniciar demo", simulatePay: "Simular pago", processing: "Procesando...", paymentSimulation: "SIMULACIÓN", paypalMode: "PAYPAL SANDBOX", paypalLive: "PAYPAL LIVE · PAGOS REALES", sandbox: "Sandbox de PayPal activo. Los puntos se acreditan después de la captura.", demo: "Simulación local activa: no se cobra dinero real.", statsKicker: "DATOS DE TEMPORADA", statsTitle: "El caos, medido.", activeEgos: "egos activos", auraGame: "aura en juego", visits: "visitas registradas", remaining: "restantes", statsNote: "Las estadísticas del MVP viven en tu navegador y se reinician si borrás la demo.", xDetected: "Perfil de X detectado", urlDetected: "Enlace detectado", invalidTarget: "Pegá @usuario, un perfil de X o una URL válida.", openLink: "Abrir enlace", outbid: "Outbid", seoKicker: "EXPLORÁ AURABID", seoTitle: "El ranking público de aura.", seoBody: "Descubrí perfiles, proyectos y egos que compiten por el puesto #1. Cada aura tiene una página pública para compartir.", seoLeaderboard: "Ver leaderboard completo", seoCategories: "Explorar categorías"
   },
   en: {
-    leaderboard: "Leaderboard", categories: "Categories", about: "About", rules: "Rules", balance: "Balance", online: "online", visitors: "visitors since launch", stats: "see stats", claim: "Claim #1 for", heroLead: "+100 aura per offer.", heroBody: "Your points decide your place; the highest offer keeps the #1 spot.", urlPlaceholder: "Your product URL or @handle", existing: "Already listed? Enter the same @handle and pay only the difference.", available: "Available", spent: "every point spent is recorded for the season", season: "SEASON 01 / TODAY", board: "The aura board", resets: "resets in", now: "#1 NOW", active: "active egos", verified: "aura in verified offers", noAlgorithm: "no algorithm · no favorites · offers only", ruleKicker: "THE ONLY RULE", manifesto: "Higher does not mean better.", manifestoEm: "It only means you paid more.", manifestoBody: "A public leaderboard for sites, profiles and projects with too much ego. The #1 spot is always one offer away.", activity: "LATEST MOVES", live: "LIVE", rulesKicker: "THRONE RULES", rulesTitle: "How aura works.", rule1: "Load points into your demo balance.", rule2: "Your total offer decides your place on the board.", rule3: "To take #1, beat the current offer by +100.", rule4: "If you reuse your @handle, you only pay the difference.", rule5: "The season resets; the history stays.", ruleNote: "Balance and offers are stored in this browser. No real money is processed.", vaultKicker: "YOUR VAULT", walletTitle: "Buy aura.", availableBalance: "available balance", add: "add", auraPoints: "aura points", addDemo: "Add in demo", simulatePay: "Simulate payment", processing: "Processing...", paymentSimulation: "SIMULATION", paypalMode: "PAYPAL SANDBOX", paypalLive: "PAYPAL LIVE · REAL PAYMENTS", resetDemo: "Reset demo", sandbox: "PayPal sandbox is active. Points are credited after capture.", demo: "Local simulation active: no real money is charged.", statsKicker: "SEASON DATA", statsTitle: "Chaos, measured.", activeEgos: "active egos", auraGame: "aura in play", visits: "recorded visits", remaining: "remaining", statsNote: "MVP stats live in your browser and reset when you clear the demo.", xDetected: "X profile detected", urlDetected: "Link detected", invalidTarget: "Enter @username, an X profile, or a valid URL.", openLink: "Open link", outbid: "Outbid", seoKicker: "EXPLORE AURABID", seoTitle: "The public aura ranking.", seoBody: "Discover profiles, projects and egos competing for the #1 spot. Every aura gets a public page to share.", seoLeaderboard: "View full leaderboard", seoCategories: "Explore categories"
+    leaderboard: "Leaderboard", categories: "Categories", about: "About", rules: "Rules", balance: "Balance", online: "online", visitors: "visitors since launch", stats: "see stats", claim: "Claim #1 for", heroLead: "+100 aura per offer.", heroBody: "Your points decide your place; the highest offer keeps the #1 spot.", urlPlaceholder: "Your product URL or @handle", existing: "Already listed? Enter the same @handle and pay only the difference.", available: "Available", spent: "every point spent is recorded for the season", season: "SEASON 01 / TODAY", board: "The aura board", resets: "resets in", now: "#1 NOW", active: "active egos", verified: "aura in verified offers", noAlgorithm: "no algorithm · no favorites · offers only", ruleKicker: "THE ONLY RULE", manifesto: "Higher does not mean better.", manifestoEm: "It only means you paid more.", manifestoBody: "A public leaderboard for sites, profiles and projects with too much ego. The #1 spot is always one offer away.", activity: "LATEST MOVES", live: "LIVE", rulesKicker: "THRONE RULES", rulesTitle: "How aura works.", rule1: "Load points into your balance.", rule2: "Your total offer decides your place on the board.", rule3: "To take #1, beat the current offer by +100.", rule4: "If you reuse your @handle, you only pay the difference.", rule5: "The season resets; the history stays.", ruleNote: "Your balance is validated on the server when Supabase is connected. Local mode is only a demo.", vaultKicker: "YOUR VAULT", walletTitle: "Buy aura.", availableBalance: "available balance", add: "add", auraPoints: "aura points", addDemo: "Add in demo", simulatePay: "Simulate payment", processing: "Processing...", paymentSimulation: "SIMULATION", paypalMode: "PAYPAL SANDBOX", paypalLive: "PAYPAL LIVE · REAL PAYMENTS", resetDemo: "Reset demo", sandbox: "PayPal sandbox is active. Points are credited after capture.", demo: "Local simulation active: no real money is charged.", statsKicker: "SEASON DATA", statsTitle: "Chaos, measured.", activeEgos: "active egos", auraGame: "aura in play", visits: "recorded visits", remaining: "remaining", statsNote: "MVP stats live in your browser and reset when you clear the demo.", xDetected: "X profile detected", urlDetected: "Link detected", invalidTarget: "Enter @username, an X profile, or a valid URL.", openLink: "Open link", outbid: "Outbid", seoKicker: "EXPLORE AURABID", seoTitle: "The public aura ranking.", seoBody: "Discover profiles, projects and egos competing for the #1 spot. Every aura gets a public page to share.", seoLeaderboard: "View full leaderboard", seoCategories: "Explore categories"
   }
 } as const;
 
@@ -217,7 +216,7 @@ export default function Home() {
   const [bid, setBid] = useState(500);
   const [handle, setHandle] = useState("");
   const [category, setCategory] = useState("Aura pura");
-  const [wallet, setWallet] = useState(1000);
+  const [wallet, setWallet] = useState(0);
   const [liveOnline, setLiveOnline] = useState(24);
   const [liveVisitors, setLiveVisitors] = useState(186);
   const [secondsLeft, setSecondsLeft] = useState(SEASON_DURATION);
@@ -256,7 +255,6 @@ export default function Home() {
           const parsed = JSON.parse(saved) as Partial<SavedState>;
           if (!supabaseConfigured && Array.isArray(parsed.entries) && parsed.entries.length > 0) setEntries(parsed.entries.map((entry) => ({ ...entry, url: entry.url || `https://x.com/${entry.handle.replace(/^@+/, "")}` })));
           if (!supabaseConfigured && Array.isArray(parsed.activities)) setActivities(parsed.activities);
-          if (typeof parsed.wallet === "number") setWallet(parsed.wallet);
           if (typeof parsed.darkMode === "boolean") setDarkMode(parsed.darkMode);
           if (parsed.locale === "es" || parsed.locale === "en") setLocale(parsed.locale);
         }
@@ -291,9 +289,10 @@ export default function Home() {
         return;
       }
 
-      const [{ data: cloudEntries, error: entriesError }, { data: cloudActivities, error: activitiesError }] = await Promise.all([
+      const [{ data: cloudEntries, error: entriesError }, { data: cloudActivities, error: activitiesError }, walletResponse] = await Promise.all([
         cloudClient.from("aura_entries").select("*").eq("season_id", season.id).order("bid_points", { ascending: false }).order("created_at", { ascending: true }).limit(50),
         cloudClient.from("aura_activities").select("*").eq("season_id", season.id).order("created_at", { ascending: false }).limit(5),
+        fetch("/api/aura/wallet"),
       ]);
 
       if (entriesError || activitiesError) {
@@ -308,6 +307,10 @@ export default function Home() {
       setCloudSeasonId(season.id);
       setEntries((cloudEntries || []).map(mapCloudEntry));
       setActivities((cloudActivities || []).map(mapCloudActivity));
+      if (walletResponse.ok) {
+        const walletData = await walletResponse.json() as { balance_points?: number };
+        setWallet(Number(walletData.balance_points) || 0);
+      }
       setSecondsLeft(Math.max(1, Math.floor((new Date(season.ends_at).getTime() - Date.now()) / 1000)));
       setCloudStatus("connected");
 
@@ -370,7 +373,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!isReady || (supabaseConfigured && cloudStatus !== "connected")) return;
-    const snapshot: SavedState = { entries, activities, wallet, darkMode, locale };
+    const snapshot: SavedState = { entries, activities, darkMode, locale };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
   }, [activities, cloudStatus, darkMode, entries, isReady, locale, wallet]);
 
@@ -450,12 +453,13 @@ export default function Home() {
           clicks: newEntry.clicks,
         }),
       });
-      const result = await response.json() as { error?: string; entry?: Parameters<typeof mapCloudEntry>[0]; activity?: Parameters<typeof mapCloudActivity>[0] | null };
+      const result = await response.json() as { error?: string; entry?: Parameters<typeof mapCloudEntry>[0]; activity?: Parameters<typeof mapCloudActivity>[0] | null; balance_points?: number };
       if (!response.ok || !result.entry) {
         setNotice(result.error || "No se pudo guardar la oferta en Supabase. Intentá de nuevo.");
         return;
       }
       const savedEntry = mapCloudEntry(result.entry);
+      setWallet(Number(result.balance_points) || 0);
       setEntries((current) => [savedEntry, ...current.filter((entry) => entry.handle.toLowerCase() !== cleanHandle.toLowerCase())].sort((a, b) => b.bid - a.bid).slice(0, 8));
       const savedActivity = result.activity ? mapCloudActivity(result.activity) : { handle: cleanHandle, text: `compró +${formatPoints(bid)} aura y desafió a ${oldLeader.handle}`, bid, age: "ahora" };
       setActivities((current) => [savedActivity, ...current].slice(0, 5));
@@ -463,7 +467,7 @@ export default function Home() {
       setEntries((current) => [newEntry, ...current.filter((entry) => entry.handle.toLowerCase() !== cleanHandle.toLowerCase())].sort((a, b) => b.bid - a.bid).slice(0, 8));
       setActivities((current) => [{ handle: cleanHandle, text: `compró +${formatPoints(bid)} aura y desafió a ${oldLeader.handle}`, bid, age: "ahora" }, ...current].slice(0, 5));
     }
-    setWallet((value) => value - cost);
+    if (!cloudSeasonId) setWallet((value) => Math.max(0, value - cost));
     setBid(bid + 100);
     setHandle("");
     setNotice(`@${cleanHandle} ahora tiene +${formatPoints(bid)} aura.`);
@@ -491,14 +495,13 @@ export default function Home() {
 
   function resetDemo() {
     if (supabaseConfigured) {
-      setWallet(1000);
       setShowWallet(false);
-      setNotice("El tablero conectado se administra desde Supabase; solo reinicié tu saldo local.");
+      setNotice("El saldo real se administra desde Supabase y no se puede reiniciar desde el navegador.");
       return;
     }
     setEntries(initialEntries);
     setActivities(initialActivity);
-    setWallet(1000);
+    setWallet(0);
     setBid(500);
     setSelectedCategory("Todo");
     window.localStorage.removeItem(STORAGE_KEY);
